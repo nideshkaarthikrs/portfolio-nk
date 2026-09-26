@@ -1,0 +1,85 @@
+@import "tailwindcss";
+
+:root {
+  --color-midnight: #17120e;
+  --color-deep: #221a14;
+  --color-deep-raised: #2a2118;
+  --color-bone: #f2e9dd;
+  --color-fog: #a6957f;
+  --color-signal: #c98a52;
+  --color-brass: #c8a45e;
+
+  --color-status-live: #6fcf97;
+  --color-status-dev: var(--color-signal);
+  --color-status-concept: var(--color-fog);
+
+  --background: var(--color-midnight);
+  --foreground: var(--color-bone);
+}
+
+@theme inline {
+  --color-midnight: var(--color-midnight);
+  --color-deep: var(--color-deep);
+  --color-deep-raised: var(--color-deep-raised);
+  --color-bone: var(--color-bone);
+  --color-fog: var(--color-fog);
+  --color-signal: var(--color-signal);
+  --color-brass: var(--color-brass);
+  --color-status-live: var(--color-status-live);
+  --color-status-dev: var(--color-status-dev);
+  --color-status-concept: var(--color-status-concept);
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+
+  --font-display: var(--font-fraunces);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+}
+
+::selection {
+  background: var(--color-signal);
+  color: var(--color-midnight);
+}
+
+.font-display {
+  font-weight: 600;
+}
+
+.glass-panel {
+  background:
+    linear-gradient(160deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0) 45%),
+    var(--color-deep);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-signal);
+  outline-offset: 2px;
+}
+
+@keyframes replay-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.replay-item {
+  animation: replay-in 300ms ease-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .replay-item {
+    animation: none;
+  }
+}

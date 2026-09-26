@@ -1,0 +1,74 @@
+---
+title: "AgentNegotiate"
+oneLiner: "AI agents that negotiate B2B purchases for you, within spend limits and merchant policies, with a full audit trail and payment settlement."
+status: "in-development"
+role: "Founder & builder"
+timeline: "2025 — ongoing"
+stack:
+  - "Python"
+  - "LangGraph"
+  - "FastAPI"
+  - "Postgres"
+  - "Stripe"
+links:
+  github: "https://github.com/nideshkaarthikrs/AgentNegotiate"
+---
+
+## The problem
+
+Small teams that buy the same categories of goods and services repeatedly — packaging, raw
+materials, software seats — spend a disproportionate amount of time on back-and-forth
+negotiation for purchases that follow the same pattern every time. Someone has to chase quotes,
+push back on price, and stay inside a budget, and none of it gets recorded anywhere useful.
+
+Procurement tools either skip negotiation entirely (fixed-price catalogs) or leave it to email
+threads with no policy enforcement and no audit trail. There's no middle layer that negotiates
+on your behalf while staying inside rules you actually trust.
+
+## What I built
+
+<PlaceholderVisual label="Buyer agent dashboard — screenshot coming soon" className="aspect-video w-full" />
+
+A buyer agent that opens a negotiation with an asking price and a target, working from a spend
+limit and a set of merchant-specific policies it isn't allowed to cross.
+
+<PlaceholderVisual label="Policy engine view — screenshot coming soon" className="aspect-video w-full" />
+
+A policy engine sitting between both agents that evaluates every offer in real time and blocks
+anything that violates the configured floor, ceiling, or merchant terms — before it ever reaches
+settlement.
+
+<PlaceholderVisual label="Audit log — screenshot coming soon" className="aspect-video w-full" />
+
+A full audit trail: every offer, counter, block, and the final agreed price, written to an
+append-only log so a human can reconstruct exactly how a deal was reached.
+
+Payment settlement wired to the agreed price once both sides confirm, so a negotiated deal turns
+into a completed transaction without a manual handoff.
+
+## Watch it negotiate
+
+<NegotiationReplay />
+
+## Architecture
+
+<ArchitectureDiagram slug="agentnegotiate" />
+
+**Key decisions and trade-offs**
+
+- **Policy engine as a separate service, not agent logic.** Keeping spend limits and merchant
+  rules out of the agent's own reasoning means a policy violation is a deterministic block, not
+  something an LLM could be argued out of. The trade-off is an extra network hop on every offer.
+- **Every message is logged before it's acted on.** The audit log writes synchronously ahead of
+  settlement, which adds latency to each round but means there's never a settled deal without a
+  matching trail.
+- **Agents negotiate in structured offers, not free text.** Constraining the protocol to typed
+  offer objects makes the policy engine's job simple and makes replays (like the one above)
+  possible, at the cost of a less "natural" negotiation transcript.
+
+## Where it's going
+
+Next milestones: a merchant-side policy editor so counterparties can configure their own floor
+and terms without touching code, and a real Stripe-backed settlement flow in place of the
+current sandboxed one. Multi-round negotiation across more than two agents is on the roadmap but
+not started.
