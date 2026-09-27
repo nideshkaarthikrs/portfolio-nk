@@ -111,9 +111,9 @@ export function FanScene({ cards, enableTilt, onContextLost, dealProgressRef }: 
         gl.domElement.addEventListener("webglcontextlost", handleLost);
       }}
     >
-      <ambientLight intensity={0.7} color="#f2e9dd" />
-      <directionalLight position={[2, 3, 4]} intensity={0.8} color="#c98a52" />
-      <directionalLight position={[-3, -1, 2]} intensity={0.3} color="#c8a45e" />
+      <ambientLight intensity={0.7} color="#ffffff" />
+      <directionalLight position={[2, 3, 4]} intensity={0.8} color="#57d9ff" />
+      <directionalLight position={[-3, -1, 2]} intensity={0.3} color="#57d9ff" />
       <ParticleField density={enableTilt ? 1 : 0.5} />
       <Suspense fallback={null}>
         <FanLayout cards={cards} enableTilt={enableTilt} dealProgressRef={dealProgressRef} />

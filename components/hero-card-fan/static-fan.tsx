@@ -17,7 +17,7 @@ export function StaticFan() {
             style={{
               transform: `rotate(${t * 10}deg) translateY(${Math.abs(t) * 10}px)`,
               marginLeft: index === 0 ? 0 : "-2.5rem",
-              background: card.kind === "photo" ? "#2a2118" : undefined,
+              background: card.kind === "photo" ? "#0a0a0a" : undefined,
             }}
             className={`relative flex h-56 w-36 shrink-0 flex-col justify-end overflow-hidden rounded-lg border p-3 ${
               card.kind === "photo" ? "border-brass" : "glass-panel border-brass/50"

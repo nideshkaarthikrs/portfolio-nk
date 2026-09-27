@@ -5,12 +5,12 @@ import { useFrame, type ThreeEvent } from "@react-three/fiber";
 import { Text, Edges, useTexture } from "@react-three/drei";
 import * as THREE from "three";
 
-const DEEP = "#221a14";
-const PHOTO_FILL = "#2a2118";
-const BONE = "#f2e9dd";
-const BRASS = "#c8a45e";
-const SIGNAL = "#c98a52";
-const MIDNIGHT = "#17120e";
+const DEEP = "#0a0a0a";
+const PHOTO_FILL = "#0a0a0a";
+const BONE = "#ffffff";
+const BRASS = "#57d9ff";
+const SIGNAL = "#57d9ff";
+const MIDNIGHT = "#000000";
 
 const CARD_WIDTH = 1.5;
 const CARD_HEIGHT = 2.1;

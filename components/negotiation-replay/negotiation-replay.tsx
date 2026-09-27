@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import script from "@/content/negotiation-replay.json";
+import { InteractiveCard } from "@/components/interactive-card";
 import { EventCard } from "@/components/negotiation-replay/event-card";
 import { NegotiationColumn, NegotiationScript } from "@/components/negotiation-replay/types";
 import { useReducedMotion } from "@/lib/use-media-query";
@@ -49,7 +50,7 @@ export function NegotiationReplay() {
 
   if (reducedMotion) {
     return (
-      <div className="glass-panel rounded-xl border border-white/10 p-6">
+      <div className="glass-panel rounded-lg border border-white/10 p-6">
         <p className="text-sm text-fog">
           {context.item} — spend limit {formatUsd(context.buyerSpendLimit)}, seller floor{" "}
           {formatUsd(context.sellerFloor)}.
@@ -68,8 +69,8 @@ export function NegotiationReplay() {
   const isDone = step >= events.length;
 
   return (
-    <div className="glass-panel rounded-xl border border-white/10 p-6">
-      <div className="flex flex-wrap items-center justify-between gap-4">
+    <InteractiveCard maxTilt={0} className="glass-panel rounded-lg border border-white/10 p-6">
+      <div className="relative flex flex-wrap items-center justify-between gap-4">
         <p className="text-sm text-fog">
           {context.item} — spend limit {formatUsd(context.buyerSpendLimit)}, seller floor{" "}
           {formatUsd(context.sellerFloor)}.
@@ -104,7 +105,7 @@ export function NegotiationReplay() {
         </div>
       </div>
 
-      <div className="mt-6 grid gap-4 lg:grid-cols-3">
+      <div className="relative mt-6 grid gap-4 lg:grid-cols-3">
         {columns.map((column) => (
           <div key={column.key} className="flex flex-col gap-3">
             <p className="text-sm text-fog">{column.label}</p>
@@ -123,7 +124,7 @@ export function NegotiationReplay() {
       {isDone && (
         <p className="mt-6 text-sm text-status-live">Negotiation complete.</p>
       )}
-    </div>
+    </InteractiveCard>
   );
 }
 

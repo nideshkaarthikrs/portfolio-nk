@@ -1,13 +1,13 @@
 @import "tailwindcss";
 
 :root {
-  --color-midnight: #17120e;
-  --color-deep: #221a14;
-  --color-deep-raised: #2a2118;
-  --color-bone: #f2e9dd;
-  --color-fog: #a6957f;
-  --color-signal: #c98a52;
-  --color-brass: #c8a45e;
+  --color-midnight: #000000;
+  --color-deep: #0a0a0a;
+  --color-deep-raised: #121212;
+  --color-bone: #ffffff;
+  --color-fog: #9a9a9a;
+  --color-signal: #57d9ff;
+  --color-brass: #57d9ff;
 
   --color-status-live: #6fcf97;
   --color-status-dev: var(--color-signal);
@@ -53,9 +53,7 @@ body {
 }
 
 .glass-panel {
-  background:
-    linear-gradient(160deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0) 45%),
-    var(--color-deep);
+  background: var(--color-deep);
 }
 
 :focus-visible {
@@ -78,8 +76,60 @@ body {
   animation: replay-in 300ms ease-out;
 }
 
+.cta-shine {
+  position: relative;
+  overflow: hidden;
+}
+
+.cta-shine::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(110deg, transparent 30%, rgba(255, 255, 255, 0.6) 50%, transparent 70%);
+  transform: translateX(-120%);
+  animation: cta-shine 4.5s ease-in-out 1.6s infinite;
+  pointer-events: none;
+}
+
+@keyframes cta-shine {
+  0%,
+  70% {
+    transform: translateX(-120%);
+  }
+  100% {
+    transform: translateX(120%);
+  }
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.marquee-track {
+  animation: marquee 40s linear infinite;
+}
+
+.marquee-mask:hover .marquee-track {
+  animation-play-state: paused;
+}
+
+.marquee-mask {
+  mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
+}
+
 @media (prefers-reduced-motion: reduce) {
-  .replay-item {
+  .replay-item,
+  .marquee-track,
+  .animate-pulse {
     animation: none;
+  }
+
+  .cta-shine::after {
+    display: none;
   }
 }

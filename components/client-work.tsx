@@ -1,23 +1,29 @@
+import { ScrambleHeading } from "@/components/scramble-heading";
 import Image from "next/image";
 import Link from "next/link";
+import { InteractiveCard } from "@/components/interactive-card";
 import { PlaceholderVisual } from "@/components/placeholder-visual";
 import { clientProjects } from "@/lib/projects";
 
 export function ClientWork() {
   return (
     <section id="client-work" className="mx-auto max-w-6xl px-6 py-24">
-      <h2 className="font-display text-3xl text-bone">Client work</h2>
+      <ScrambleHeading index="03" text="Client work" />
       <div className="mt-10 grid gap-8 sm:grid-cols-2">
         {clientProjects.map((client) => (
-          <div key={client.slug} className="flex flex-col gap-4">
+          <InteractiveCard
+            key={client.slug}
+            maxTilt={4}
+            className="flex flex-col gap-4 rounded-lg border border-white/10 bg-deep/60 p-4"
+          >
             {client.screenshot ? (
-              <div className="relative aspect-[4/3] w-full overflow-hidden rounded-lg border border-white/10">
+              <div className="relative aspect-[4/3] w-full overflow-hidden rounded-md border border-white/10">
                 <Image
                   src={client.screenshot}
                   alt={`Screenshot of the ${client.name} homepage`}
                   fill
                   sizes="(min-width: 640px) 50vw, 100vw"
-                  className="object-cover object-top"
+                  className="object-cover object-top transition-transform duration-700 ease-out group-hover/card:scale-[1.04]"
                 />
               </div>
             ) : (
@@ -47,7 +53,7 @@ export function ClientWork() {
                 </Link>
               ))}
             </div>
-          </div>
+          </InteractiveCard>
         ))}
       </div>
     </section>

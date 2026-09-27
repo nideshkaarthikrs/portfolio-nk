@@ -1,3 +1,4 @@
+import { ScrambleHeading } from "@/components/scramble-heading";
 import Image from "next/image";
 
 export function About() {
@@ -15,7 +16,7 @@ export function About() {
           />
         </div>
         <div className="flex flex-col gap-5">
-          <h2 className="font-display text-3xl text-bone">About</h2>
+          <ScrambleHeading index="05" text="About" />
           <p className="max-w-[68ch] text-fog">
             I grew up in Madurai and started writing code because I wanted to make things other
             people could actually use, not just solve problems on paper. That pull toward

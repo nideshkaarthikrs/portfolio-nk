@@ -17,7 +17,7 @@ export default function Image() {
           justifyContent: "space-between",
           padding: "80px",
           background:
-            "radial-gradient(120% 100% at 20% 0%, #241a11 0%, #17120e 55%, #100b08 100%)",
+            "radial-gradient(120% 100% at 20% 0%, #0a0a0a 0%, #000000 55%, #000000 100%)",
         }}
       >
         <div
@@ -25,7 +25,7 @@ export default function Image() {
             display: "flex",
             alignItems: "center",
             gap: "16px",
-            color: "#a6957f",
+            color: "#9a9a9a",
             fontSize: 28,
           }}
         >
@@ -37,13 +37,13 @@ export default function Image() {
               fontFamily: "Georgia, serif",
               fontSize: 88,
               fontWeight: 700,
-              color: "#f2e9dd",
+              color: "#ffffff",
               lineHeight: 1.05,
             }}
           >
             Founder who builds.
           </div>
-          <div style={{ fontSize: 30, color: "#c7b7a4", maxWidth: 900 }}>{SITE_DESCRIPTION}</div>
+          <div style={{ fontSize: 30, color: "#bdbdbd", maxWidth: 900 }}>{SITE_DESCRIPTION}</div>
         </div>
       </div>
     ),

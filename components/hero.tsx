@@ -2,12 +2,32 @@
 
 import { useRef } from "react";
 import Link from "next/link";
+import { motion } from "motion/react";
 import { HeroCardFan } from "@/components/hero-card-fan/hero-card-fan";
 import { MagneticButton } from "@/components/magnetic-button";
+import { ScrambleText } from "@/components/scramble-heading";
+import { useReducedMotion } from "@/lib/use-media-query";
 import { socialLinks } from "@/lib/projects";
+
+const EASE = [0.22, 1, 0.36, 1] as const;
+const HEADLINE = [
+  { word: "Founder", accent: false },
+  { word: "who", accent: false },
+  { word: "builds.", accent: true },
+];
 
 export function Hero() {
   const sectionRef = useRef<HTMLElement>(null);
+  const reducedMotion = useReducedMotion();
+
+  const rise = (delay: number) =>
+    reducedMotion
+      ? {}
+      : {
+          initial: { opacity: 0, y: 18 },
+          animate: { opacity: 1, y: 0 },
+          transition: { delay, duration: 0.8, ease: EASE },
+        };
 
   return (
     <section
@@ -15,18 +35,39 @@ export function Hero() {
       className="mx-auto grid max-w-6xl gap-12 px-6 pt-16 pb-24 sm:pt-24 sm:pb-32 lg:grid-cols-2 lg:items-center"
     >
       <div className="flex flex-col gap-6">
-        <p className="text-fog">Nidesh Kaarthik</p>
-        <h1 className="font-display text-5xl leading-[1.05] text-bone sm:text-6xl">
-          Founder who builds.
+        <p className="flex items-center gap-3 font-mono text-xs tracking-[0.25em] text-signal">
+          <span aria-hidden className="h-1.5 w-1.5 animate-pulse rounded-full bg-signal" />
+          <ScrambleText text="NIDESH KAARTHIK — ONLINE" />
+        </p>
+        <h1
+          aria-label="Founder who builds."
+          className="font-display text-5xl leading-[1.05] text-bone sm:text-6xl"
+        >
+          {HEADLINE.map(({ word, accent }, i) => (
+            <motion.span
+              key={word}
+              aria-hidden
+              className={`mr-[0.25em] inline-block ${accent ? "text-signal" : ""}`}
+              {...(reducedMotion
+                ? {}
+                : {
+                    initial: { opacity: 0, y: 28, filter: "blur(10px)" },
+                    animate: { opacity: 1, y: 0, filter: "blur(0px)" },
+                    transition: { delay: 0.3 + i * 0.14, duration: 0.9, ease: EASE },
+                  })}
+            >
+              {word}
+            </motion.span>
+          ))}
         </h1>
-        <p className="max-w-[60ch] text-lg text-fog">
+        <motion.p className="max-w-[60ch] text-lg text-fog" {...rise(0.8)}>
           I design and ship AI products end to end, from agent architecture to the pitch deck.
           Currently building CSN and AgentNegotiate.
-        </p>
-        <div className="flex flex-wrap items-center gap-4 pt-2">
+        </motion.p>
+        <motion.div className="flex flex-wrap items-center gap-4 pt-2" {...rise(0.95)}>
           <MagneticButton
             href={socialLinks.bookACall}
-            className="inline-block rounded bg-signal px-6 py-3 text-sm font-medium text-midnight transition-opacity hover:opacity-90"
+            className="cta-shine inline-block rounded bg-signal px-6 py-3 text-sm font-medium text-midnight transition-opacity hover:opacity-90"
           >
             Book a call
           </MagneticButton>
@@ -36,8 +77,8 @@ export function Hero() {
           >
             Email me
           </Link>
-        </div>
-        <div className="flex gap-5 pt-4 text-sm text-fog">
+        </motion.div>
+        <motion.div className="flex gap-5 pt-4 text-sm text-fog" {...rise(1.1)}>
           <Link href={socialLinks.linkedin} className="hover:text-bone">
             LinkedIn
           </Link>
@@ -47,7 +88,7 @@ export function Hero() {
           <Link href={socialLinks.instagram} className="hover:text-bone">
             Instagram
           </Link>
-        </div>
+        </motion.div>
       </div>
       <HeroCardFan sectionRef={sectionRef} />
     </section>

@@ -59,21 +59,21 @@ export function ParticleField({ density = 1 }: { density?: number }) {
     <>
       <ParticleLayer
         count={Math.round(90 * density)}
-        color="#c8a45e"
+        color="#57d9ff"
         size={0.05}
         speed={0.025}
         opacity={0.55}
       />
       <ParticleLayer
         count={Math.round(60 * density)}
-        color="#c98a52"
+        color="#57d9ff"
         size={0.032}
         speed={-0.018}
-        opacity={0.5}
+        opacity={0.4}
       />
       <ParticleLayer
         count={Math.round(50 * density)}
-        color="#f2e9dd"
+        color="#ffffff"
         size={0.022}
         speed={0.014}
         opacity={0.4}

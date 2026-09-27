@@ -61,7 +61,7 @@ export function ArchitectureDiagram({ slug }: { slug: string }) {
   }
 
   return (
-    <div className="glass-panel rounded-xl border border-white/10 p-6">
+    <div className="glass-panel rounded-lg border border-white/10 p-6">
       <Diagram />
     </div>
   );

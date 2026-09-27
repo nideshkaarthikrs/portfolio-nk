@@ -1,7 +1,7 @@
 "use client";
 
-import type { MouseEvent } from "react";
 import Link from "next/link";
+import { InteractiveCard } from "@/components/interactive-card";
 import { PlaceholderVisual } from "@/components/placeholder-visual";
 import { StatusTag } from "@/components/status-tag";
 import { useInView } from "@/lib/use-in-view";
@@ -21,47 +21,35 @@ export function FlagshipPanel({
   const { ref, inView } = useInView<HTMLAnchorElement>({ threshold: 0.25 });
   const revealed = reducedMotion || inView;
 
-  const handleMouseMove = (event: MouseEvent<HTMLAnchorElement>) => {
-    const rect = event.currentTarget.getBoundingClientRect();
-    const x = ((event.clientX - rect.left) / rect.width) * 100;
-    const y = ((event.clientY - rect.top) / rect.height) * 100;
-    event.currentTarget.style.setProperty("--spotlight-x", `${x}%`);
-    event.currentTarget.style.setProperty("--spotlight-y", `${y}%`);
-  };
-
   return (
-    <Link
-      ref={ref}
-      id={`work-${project.slug}`}
-      href={`/work/${project.slug}`}
-      onMouseMove={handleMouseMove}
-      style={{ transitionDelay: revealed ? `${index * 100}ms` : "0ms" }}
-      className={`group relative grid scroll-mt-24 gap-8 overflow-hidden rounded-2xl transition-all duration-700 ease-out lg:grid-cols-2 lg:items-center lg:gap-12 ${
-        revealed ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0"
-      }`}
-    >
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
-        style={{
-          background:
-            "radial-gradient(400px circle at var(--spotlight-x, 50%) var(--spotlight-y, 50%), rgba(201, 138, 82, 0.12), transparent 70%)",
-        }}
-      />
-      <div className={`relative flex flex-col gap-4 ${reversed ? "lg:order-2" : ""}`}>
-        <StatusTag status={project.status} />
-        <h3 className="font-display text-2xl text-bone group-hover:text-signal">
-          {project.name}
-        </h3>
-        <p className="max-w-[60ch] text-fog">{project.oneLiner}</p>
-        <span className="text-sm text-signal opacity-0 transition-opacity group-hover:opacity-100">
-          View project →
-        </span>
-      </div>
-      <PlaceholderVisual
-        label={`${project.name} — visual coming soon`}
-        className={`relative aspect-video w-full ${reversed ? "lg:order-1" : ""}`}
-      />
-    </Link>
+    <InteractiveCard maxTilt={2.5} className="rounded-lg">
+      <Link
+        ref={ref}
+        id={`work-${project.slug}`}
+        href={`/work/${project.slug}`}
+        style={{ transitionDelay: revealed ? `${index * 100}ms` : "0ms" }}
+        className={`group relative grid scroll-mt-24 gap-8 rounded-lg border border-white/5 p-6 transition-all duration-700 ease-out lg:grid-cols-2 lg:items-center lg:gap-12 ${
+          revealed ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0"
+        }`}
+      >
+        <div className={`relative flex flex-col gap-4 ${reversed ? "lg:order-2" : ""}`}>
+          <span className="font-mono text-xs tracking-[0.2em] text-fog/70">
+            {String(index + 1).padStart(2, "0")} — FLAGSHIP
+          </span>
+          <StatusTag status={project.status} />
+          <h3 className="font-display text-2xl text-bone transition-colors group-hover:text-signal">
+            {project.name}
+          </h3>
+          <p className="max-w-[60ch] text-fog">{project.oneLiner}</p>
+          <span className="text-sm text-signal opacity-0 transition-all duration-300 group-hover:translate-x-1 group-hover:opacity-100">
+            View project →
+          </span>
+        </div>
+        <PlaceholderVisual
+          label={`${project.name} — visual coming soon`}
+          className={`relative aspect-video w-full ${reversed ? "lg:order-1" : ""}`}
+        />
+      </Link>
+    </InteractiveCard>
   );
 }

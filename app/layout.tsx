@@ -3,6 +3,8 @@ import { Geist, Geist_Mono, Fraunces } from "next/font/google";
 import { Nav } from "@/components/nav";
 import { Footer } from "@/components/footer";
 import { SmoothScroll } from "@/components/smooth-scroll";
+import { AmbientStarfield } from "@/components/ambient-starfield";
+import { CursorGlow } from "@/components/cursor-glow";
 import { SITE_DESCRIPTION, SITE_NAME, SITE_TITLE, SITE_URL } from "@/lib/site";
 import "./globals.css";
 
@@ -49,6 +51,8 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       className={`${geistSans.variable} ${geistMono.variable} ${fraunces.variable} h-full antialiased`}
     >
       <body className="flex min-h-full flex-col bg-midnight text-bone">
+        <AmbientStarfield />
+        <CursorGlow />
         <SmoothScroll>
           <Nav />
           <main className="flex-1">{children}</main>
