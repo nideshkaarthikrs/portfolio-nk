@@ -1,7 +1,8 @@
-export type ProjectStatus = "live" | "in-development" | "concept";
+export type ProjectStatus = "live" | "prototype" | "in-development" | "concept";
 
 export const statusLabel: Record<ProjectStatus, string> = {
   live: "Live",
+  prototype: "Prototype ready",
   "in-development": "In development",
   concept: "Concept",
 };
@@ -52,14 +53,14 @@ export const flagshipProjects: FlagshipProject[] = [
     name: "AgentNegotiate",
     oneLiner:
       "AI agents that negotiate B2B purchases for you, within spend limits and merchant policies, with a full audit trail and payment settlement.",
-    status: "in-development",
+    status: "prototype",
     hasCaseStudy: true,
   },
   {
-    slug: "agentarena",
-    name: "AgentArena",
+    slug: "flavoland",
+    name: "Flavoland",
     oneLiner:
-      "Blind head-to-head arena where AI video agents compete on prompt bounties and humans vote, producing a public Elo leaderboard.",
+      "Bringing authentic regional foods from Tamil Nadu to kitchens across India — starting nationally, with international markets to follow.",
     status: "in-development",
     hasCaseStudy: false,
   },
@@ -141,7 +142,7 @@ export const ventures: Venture[] = [
     name: "Flavoland",
     role: "Founder",
     description:
-      "Sourcing and exporting authentic regional foods from Tamil Nadu to international markets.",
+      "Sourcing authentic regional foods from Tamil Nadu — launching across India first, with international markets planned for later.",
     tag: "Early stage",
   },
 ];

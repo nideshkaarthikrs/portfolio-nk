@@ -8,8 +8,8 @@ import { ParticleField } from "@/components/hero-card-fan/particle-field";
 import { FanCard } from "@/components/hero-card-fan/fan-cards";
 import { scrollToTarget } from "@/lib/scroll-to-target";
 
-const ANGLE_STEP = 0.3;
-const FAN_RADIUS = 3.4;
+const ANGLE_STEP = 0.28;
+const FAN_RADIUS = 4.2;
 const FORWARD_BOOST = 0.22;
 const DEAL_DROP = 2.6;
 const DEAL_TILT = 0.7;
@@ -27,7 +27,10 @@ interface FanSceneProps extends FanLayoutProps {
 
 function FanLayout({ cards, enableTilt, dealProgressRef }: FanLayoutProps) {
   const groupRef = useRef<THREE.Group>(null);
+  // Camera distance is tuned for the full 5-card spread; the 3-card mobile fan can sit larger.
+  const baseScale = cards.length <= 3 ? 1.45 : 1;
   const { pointer } = useThree();
+  const dustDensity = enableTilt ? 1 : 0.5;
 
   useFrame((_, delta) => {
     if (!groupRef.current) return;
@@ -39,7 +42,7 @@ function FanLayout({ cards, enableTilt, dealProgressRef }: FanLayoutProps) {
     const targetRotX = tiltX + dealProgress * DEAL_TILT;
     const targetRotY = tiltY;
     const targetPosY = -dealProgress * DEAL_DROP;
-    const targetScale = 1 - dealProgress * DEAL_SHRINK;
+    const targetScale = baseScale * (1 - dealProgress * DEAL_SHRINK);
 
     groupRef.current.rotation.x = THREE.MathUtils.damp(
       groupRef.current.rotation.x,
@@ -77,19 +80,32 @@ function FanLayout({ cards, enableTilt, dealProgressRef }: FanLayoutProps) {
         FAN_RADIUS * (Math.cos(angle) - 1),
         (mid - Math.abs(t)) * FORWARD_BOOST + forwardEmphasis,
       ];
-      return { card, position, rotationZ: -angle };
+      return {
+        card,
+        position,
+        rotationZ: -angle,
+        side: Math.sign(t),
+        // Outermost cards dissolve first.
+        order: mid - Math.abs(t),
+      };
     });
   }, [cards]);
 
   return (
     <group ref={groupRef}>
-      {layout.map(({ card, position, rotationZ }) => (
+      {layout.map(({ card, position, rotationZ, side, order }) => (
         <CardMesh
           key={card.key}
           position={position}
           rotationZ={rotationZ}
           label={card.label}
           kind={card.kind}
+          index={card.index}
+          destination={card.destination}
+          side={side}
+          dissolveOrder={order}
+          dealProgressRef={dealProgressRef}
+          dustDensity={dustDensity}
           onSelect={() => scrollToTarget(card.scrollTargetId)}
         />
       ))}
@@ -101,7 +117,7 @@ export function FanScene({ cards, enableTilt, onContextLost, dealProgressRef }: 
   return (
     <Canvas
       dpr={[1, 2]}
-      camera={{ position: [0, 0.3, 7], fov: 32 }}
+      camera={{ position: [0, -0.2, 9.2], fov: 32 }}
       gl={{ antialias: true, alpha: true }}
       onCreated={({ gl }) => {
         const handleLost = (event: Event) => {

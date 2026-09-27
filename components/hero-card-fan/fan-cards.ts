@@ -1,31 +1,50 @@
-import { flagshipProjects } from "@/lib/projects";
-
 export interface FanCard {
   key: string;
-  kind: "project" | "photo";
+  kind: "role" | "photo";
   label: string;
+  index?: string;
   scrollTargetId: string;
+  destination: string;
 }
-
-const [first, ...rest] = flagshipProjects;
 
 export const fanCards: FanCard[] = [
   {
-    key: first.slug,
-    kind: "project",
-    label: first.name,
-    scrollTargetId: `work-${first.slug}`,
+    key: "founder",
+    kind: "role",
+    label: "Founder",
+    index: "01",
+    scrollTargetId: "ventures",
+    destination: "Ventures",
+  },
+  {
+    key: "builder",
+    kind: "role",
+    label: "Builder",
+    index: "02",
+    scrollTargetId: "work",
+    destination: "Work",
   },
   {
     key: "photo",
     kind: "photo",
     label: "Nidesh Kaarthik",
     scrollTargetId: "about",
+    destination: "About",
   },
-  ...rest.map((project) => ({
-    key: project.slug,
-    kind: "project" as const,
-    label: project.name,
-    scrollTargetId: `work-${project.slug}`,
-  })),
+  {
+    key: "ai-engineer",
+    kind: "role",
+    label: "AI Engineer",
+    index: "03",
+    scrollTargetId: "more-work",
+    destination: "More work",
+  },
+  {
+    key: "magician",
+    kind: "role",
+    label: "Magician",
+    index: "04",
+    scrollTargetId: "beyond-code",
+    destination: "Beyond code",
+  },
 ];

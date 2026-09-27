@@ -35,9 +35,8 @@ export function Hero() {
       className="mx-auto grid max-w-6xl gap-12 px-6 pt-16 pb-24 sm:pt-24 sm:pb-32 lg:grid-cols-2 lg:items-center"
     >
       <div className="flex flex-col gap-6">
-        <p className="flex items-center gap-3 font-mono text-xs tracking-[0.25em] text-signal">
-          <span aria-hidden className="h-1.5 w-1.5 animate-pulse rounded-full bg-signal" />
-          <ScrambleText text="NIDESH KAARTHIK — ONLINE" />
+        <p className="font-mono text-xs tracking-[0.25em] text-signal">
+          <ScrambleText text="NIDESH KAARTHIK" />
         </p>
         <h1
           aria-label="Founder who builds."
@@ -62,7 +61,7 @@ export function Hero() {
         </h1>
         <motion.p className="max-w-[60ch] text-lg text-fog" {...rise(0.8)}>
           I design and ship AI products end to end, from agent architecture to the pitch deck.
-          Currently building CSN and AgentNegotiate.
+          Currently building CSN and Flavoland.
         </motion.p>
         <motion.div className="flex flex-wrap items-center gap-4 pt-2" {...rise(0.95)}>
           <MagneticButton

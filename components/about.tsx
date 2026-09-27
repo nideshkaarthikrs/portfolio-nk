@@ -29,9 +29,9 @@ export function About() {
             leave me alone.
           </p>
           <p className="max-w-[68ch] text-fog">
-            Right now that means CSN and AgentNegotiate: one gives creators a fair, automated way
-            to split revenue on collaborative work, the other lets AI agents handle the tedious
-            parts of B2B purchasing safely. Both are still early, both are real.
+            Right now that means CSN and Flavoland: one gives creators a fair, automated way to
+            split revenue on collaborative work, the other brings authentic regional foods from
+            Tamil Nadu to kitchens across India. Both are still early, both are real.
           </p>
           <p className="max-w-[68ch] text-fog">
             The goal is simple: build a company while I&apos;m still in college, not after.
