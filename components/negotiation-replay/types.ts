@@ -3,6 +3,7 @@ export type NegotiationColumn = "buyer" | "seller" | "policy";
 export type NegotiationEventType =
   | "offer"
   | "counter"
+  | "check"
   | "blocked"
   | "revised"
   | "agreement"
@@ -21,8 +22,9 @@ export interface NegotiationEvent {
 export interface NegotiationScript {
   context: {
     item: string;
-    buyerSpendLimit: number;
-    sellerFloor: number;
+    buyerMaxBudget: number;
+    sellerFloorPerUnit: number;
+    maxRounds: number;
   };
   events: NegotiationEvent[];
 }

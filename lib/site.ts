@@ -1,5 +1,10 @@
-// TODO: replace with the real domain once purchased (spec Section 7).
-export const SITE_URL = "https://nideshkaarthik.com";
+// Set NEXT_PUBLIC_SITE_URL once a custom domain exists. Until then, use the host's own
+// production URL: Vercel exposes VERCEL_PROJECT_PRODUCTION_URL, Netlify exposes URL.
+export const SITE_URL =
+  process.env.NEXT_PUBLIC_SITE_URL ??
+  (process.env.VERCEL_PROJECT_PRODUCTION_URL
+    ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
+    : process.env.URL ?? "http://localhost:3000");
 
 export const SITE_NAME = "Nidesh Kaarthik";
 export const SITE_TITLE = "Nidesh Kaarthik — Founder who builds";

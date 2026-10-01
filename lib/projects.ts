@@ -13,13 +13,18 @@ export interface FlagshipProject {
   oneLiner: string;
   status: ProjectStatus;
   hasCaseStudy: boolean;
+  /** A drawn stand-in for projects that can't show real screens yet. Takes priority over `image`. */
+  visual?: "csn-network";
+  /** Panel visual under public/, e.g. "/images/work/csn.png". Falls back to a placeholder. */
+  image?: string;
 }
 
 export interface MoreWorkProject {
   slug: string;
   name: string;
   oneLiner: string;
-  githubUrl: string;
+  /** Omitted for private repos; the row then renders without a link. */
+  githubUrl?: string;
 }
 
 export interface ClientProject {
@@ -47,14 +52,16 @@ export const flagshipProjects: FlagshipProject[] = [
     oneLiner: "A platform for creators to co-produce and split revenue — currently in research and building.",
     status: "in-development",
     hasCaseStudy: false,
+    visual: "csn-network",
   },
   {
     slug: "agentnegotiate",
     name: "AgentNegotiate",
     oneLiner:
-      "AI agents that negotiate B2B purchases for you, within spend limits and merchant policies, with a full audit trail and payment settlement.",
+      "A simulation prototype where two AI agents negotiate a B2B purchase inside hard budget and price-floor limits, with a hash-chained audit trail.",
     status: "prototype",
     hasCaseStudy: true,
+    image: "/images/work/agentNegotiate2.png",
   },
   {
     slug: "flavoland",
@@ -63,6 +70,7 @@ export const flagshipProjects: FlagshipProject[] = [
       "Bringing authentic regional foods from Tamil Nadu to kitchens across India — starting nationally, with international markets to follow.",
     status: "in-development",
     hasCaseStudy: false,
+    image: "/images/work/flavolandTempLandingPage.png",
   },
 ];
 
@@ -84,25 +92,18 @@ export const moreWorkProjects: MoreWorkProject[] = [
     slug: "civiclens",
     name: "CivicLens",
     oneLiner: "AI document intelligence for Indian legal and regulatory documents.",
-    githubUrl: "#",
+    githubUrl: "https://github.com/nideshkaarthikrs/ShipToScale-PureLogic",
   },
   {
     slug: "apex-camino",
     name: "Apex Camino",
     oneLiner: "AI workout coach: tap to log sets, get the next session planned for you.",
-    githubUrl: "#",
   },
   {
     slug: "receipt",
     name: "Receipt",
     oneLiner: "Tamper-evident proof-of-work logs for freelancers, built on a hash chain.",
-    githubUrl: "#",
-  },
-  {
-    slug: "github-mcp-agent",
-    name: "GitHub MCP Agent",
-    oneLiner: "A Python MCP agent with scoped, read-only GitHub access.",
-    githubUrl: "#",
+    githubUrl: "https://github.com/nideshkaarthikrs/receipt-end-term-project",
   },
 ];
 
@@ -153,7 +154,6 @@ export const socialLinks = {
   linkedin: "https://linkedin.com/in/nidesh-kaarthik-r-s-6bb535362",
   github: "https://github.com/nideshkaarthikrs",
   instagram: "https://instagram.com/nidesh_kaarthik_",
-  // TODO: real email and Cal.com booking link (spec Section 7).
-  email: "mailto:hello@example.com",
-  bookACall: "#",
+  email: "mailto:rs.nideshkaarthik@gmail.com",
+  bookACall: "https://cal.com/nideshkaarthikrs/15min",
 };

@@ -15,6 +15,14 @@ const DEAL_DROP = 2.6;
 const DEAL_TILT = 0.7;
 const DEAL_SHRINK = 0.3;
 
+// R3F (<= 9.8.1) still builds its store clock with the deprecated THREE.Clock; drop only that
+// notice until fiber moves to THREE.Timer, and forward every other three.js message untouched.
+const CLOCK_DEPRECATION = "THREE.Clock: This module has been deprecated";
+THREE.setConsoleFunction((method: "log" | "warn" | "error", message: string, ...params: unknown[]) => {
+  if (method === "warn" && message.startsWith(CLOCK_DEPRECATION)) return;
+  console[method](message, ...params);
+});
+
 interface FanLayoutProps {
   cards: FanCard[];
   enableTilt: boolean;

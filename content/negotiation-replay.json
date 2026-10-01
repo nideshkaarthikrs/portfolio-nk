@@ -1,72 +1,79 @@
 {
   "context": {
-    "item": "12,000 units of custom packaging",
-    "buyerSpendLimit": 18000,
-    "sellerFloor": 15000
+    "item": "100 units of premium steel bolts",
+    "buyerMaxBudget": 12000,
+    "sellerFloorPerUnit": 90,
+    "maxRounds": 3
   },
   "events": [
     {
       "id": 1,
-      "column": "seller",
+      "column": "buyer",
       "type": "offer",
-      "actorLabel": "Seller agent",
-      "message": "Opening ask: $19,500 for 12,000 units, 30-day terms.",
-      "amount": "$19,500"
+      "actorLabel": "Buyer · R1 · Initial offer",
+      "message": "We are initiating negotiations by offering ₹80.00 for a quantity of 100 units.",
+      "amount": "₹80.00"
     },
     {
       "id": 2,
-      "column": "buyer",
-      "type": "counter",
-      "actorLabel": "Buyer agent",
-      "message": "Counter: $16,200, 30-day terms.",
-      "amount": "$16,200"
+      "column": "policy",
+      "type": "check",
+      "actorLabel": "Policy engine",
+      "message": "Round 1 of 3: seller may concede a third of the gap, never below the ₹90 floor."
     },
     {
       "id": 3,
-      "column": "buyer",
-      "type": "offer",
-      "actorLabel": "Buyer agent",
-      "message": "Revised counter: $14,800.",
-      "amount": "$14,800"
+      "column": "seller",
+      "type": "counter",
+      "actorLabel": "Seller · R1 · Counter offer",
+      "message": "We are countering the buyer's offer of ₹80.00 with a price of ₹106.67 per unit for a quantity of 100 units.",
+      "amount": "₹106.67"
     },
     {
       "id": 4,
-      "column": "policy",
-      "type": "blocked",
-      "actorLabel": "Policy engine",
-      "message": "Blocked — $14,800 is below the seller's floor of $15,000.",
-      "amount": "$14,800"
+      "column": "buyer",
+      "type": "counter",
+      "actorLabel": "Buyer · R2 · Counter offer",
+      "message": "We have submitted a counter-offer of ₹97.78 per unit, reflecting a fair compromise to bridge the remaining price gap.",
+      "amount": "₹97.78"
     },
     {
       "id": 5,
-      "column": "buyer",
-      "type": "revised",
-      "actorLabel": "Buyer agent",
-      "message": "Revised offer: $15,600.",
-      "amount": "$15,600"
+      "column": "seller",
+      "type": "counter",
+      "actorLabel": "Seller · R2 · Counter offer",
+      "message": "We are countering with ₹100.74 per unit, a reasonable adjustment from our previous position to keep negotiations moving forward.",
+      "amount": "₹100.74"
     },
     {
       "id": 6,
-      "column": "seller",
-      "type": "agreement",
-      "actorLabel": "Seller agent",
-      "message": "Accepted: $15,600, 30-day terms.",
-      "amount": "$15,600"
+      "column": "policy",
+      "type": "check",
+      "actorLabel": "Policy engine",
+      "message": "Final round: buyer's concession target reaches the seller's price, and ₹10,074 is within the ₹12,000 budget."
     },
     {
       "id": 7,
-      "column": "policy",
-      "type": "settlement",
-      "actorLabel": "Payment settlement",
-      "message": "Payment settled: $15,600 via Stripe.",
-      "amount": "$15,600"
+      "column": "buyer",
+      "type": "agreement",
+      "actorLabel": "Buyer · R3 · Accepted",
+      "message": "We have accepted the seller's offer of ₹100.74 per unit in round 3 because it meets our negotiated concession target.",
+      "amount": "₹100.74"
     },
     {
       "id": 8,
       "column": "policy",
+      "type": "settlement",
+      "actorLabel": "System · Deal closed",
+      "message": "Deal agreed by both agents: ₹100.74 × 100 units = ₹10,074. Payment link ready (test mode).",
+      "amount": "₹10,074"
+    },
+    {
+      "id": 9,
+      "column": "policy",
       "type": "audit",
-      "actorLabel": "Audit log",
-      "message": "Entry #482 written — full transcript hashed and stored."
+      "actorLabel": "Audit trail",
+      "message": "Every offer and decision chained with SHA-256 — audit chain verified."
     }
   ]
 }

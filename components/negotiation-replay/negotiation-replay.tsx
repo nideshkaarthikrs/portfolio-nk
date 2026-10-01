@@ -11,7 +11,7 @@ const { context, events } = script as NegotiationScript;
 
 const columns: { key: NegotiationColumn; label: string }[] = [
   { key: "buyer", label: "Buyer agent" },
-  { key: "policy", label: "Policy engine" },
+  { key: "policy", label: "Policy engine & system" },
   { key: "seller", label: "Seller agent" },
 ];
 
@@ -51,10 +51,7 @@ export function NegotiationReplay() {
   if (reducedMotion) {
     return (
       <div className="glass-panel rounded-lg border border-white/10 p-6">
-        <p className="text-sm text-fog">
-          {context.item} — spend limit {formatUsd(context.buyerSpendLimit)}, seller floor{" "}
-          {formatUsd(context.sellerFloor)}.
-        </p>
+        <ContextLine />
         <ol className="mt-4 flex flex-col gap-3">
           {events.map((event) => (
             <li key={event.id}>
@@ -71,10 +68,7 @@ export function NegotiationReplay() {
   return (
     <InteractiveCard maxTilt={0} className="glass-panel rounded-lg border border-white/10 p-6">
       <div className="relative flex flex-wrap items-center justify-between gap-4">
-        <p className="text-sm text-fog">
-          {context.item} — spend limit {formatUsd(context.buyerSpendLimit)}, seller floor{" "}
-          {formatUsd(context.sellerFloor)}.
-        </p>
+        <ContextLine />
         <div className="flex items-center gap-2">
           <button
             type="button"
@@ -128,6 +122,15 @@ export function NegotiationReplay() {
   );
 }
 
-function formatUsd(value: number) {
-  return `$${value.toLocaleString("en-US")}`;
+function ContextLine() {
+  return (
+    <p className="text-sm text-fog">
+      {context.item} — buyer budget {formatInr(context.buyerMaxBudget)}, seller floor{" "}
+      {formatInr(context.sellerFloorPerUnit)}/unit, {context.maxRounds} rounds max.
+    </p>
+  );
+}
+
+function formatInr(value: number) {
+  return `₹${value.toLocaleString("en-IN")}`;
 }

@@ -133,3 +133,18 @@ body {
     display: none;
   }
 }
+
+/* CSN stand-in visual: revenue flowing from the project out to each creator. */
+@keyframes csn-flow {
+  to {
+    stroke-dashoffset: -48;
+  }
+}
+.csn-flow {
+  animation: csn-flow 2.4s linear infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .csn-flow {
+    animation: none;
+  }
+}

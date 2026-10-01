@@ -2,6 +2,7 @@ import type { ComponentPropsWithoutRef } from "react";
 import { PlaceholderVisual } from "@/components/placeholder-visual";
 import { ArchitectureDiagram } from "@/components/case-study/architecture-diagram";
 import { NegotiationReplay } from "@/components/negotiation-replay/negotiation-replay";
+import { Screenshot } from "@/components/case-study/screenshot";
 
 export const mdxComponents = {
   h2: (props: ComponentPropsWithoutRef<"h2">) => (
@@ -32,4 +33,5 @@ export const mdxComponents = {
   PlaceholderVisual,
   ArchitectureDiagram,
   NegotiationReplay,
+  Screenshot,
 };

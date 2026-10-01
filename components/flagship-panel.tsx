@@ -1,6 +1,8 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
+import { CsnVisual } from "@/components/csn-visual";
 import { InteractiveCard } from "@/components/interactive-card";
 import { PlaceholderVisual } from "@/components/placeholder-visual";
 import { StatusTag } from "@/components/status-tag";
@@ -45,10 +47,30 @@ export function FlagshipPanel({
             View project →
           </span>
         </div>
-        <PlaceholderVisual
-          label={`${project.name} — visual coming soon`}
-          className={`relative aspect-video w-full ${reversed ? "lg:order-1" : ""}`}
-        />
+        {project.visual === "csn-network" ? (
+          <CsnVisual
+            className={`relative aspect-video w-full ${reversed ? "lg:order-1" : ""}`}
+          />
+        ) : project.image ? (
+          <div
+            className={`relative aspect-video w-full overflow-hidden rounded-lg border border-white/10 ${
+              reversed ? "lg:order-1" : ""
+            }`}
+          >
+            <Image
+              src={project.image}
+              alt={`${project.name} screenshot`}
+              fill
+              sizes="(min-width: 1024px) 560px, 100vw"
+              className="object-cover object-top"
+            />
+          </div>
+        ) : (
+          <PlaceholderVisual
+            label={`${project.name} — visual coming soon`}
+            className={`relative aspect-video w-full ${reversed ? "lg:order-1" : ""}`}
+          />
+        )}
       </Link>
     </InteractiveCard>
   );

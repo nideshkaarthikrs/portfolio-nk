@@ -1,52 +1,73 @@
 ---
 title: "AgentNegotiate"
-oneLiner: "AI agents that negotiate B2B purchases for you, within spend limits and merchant policies, with a full audit trail and payment settlement."
+oneLiner: "A simulation prototype where two AI agents negotiate a B2B purchase inside hard budget and price-floor limits, with a hash-chained audit trail and a payment link at the end."
 status: "prototype"
-role: "Founder & builder"
+role: "Builder"
 timeline: "2025 — prototype built"
 stack:
-  - "Python"
-  - "LangGraph"
+  - "Next.js"
   - "FastAPI"
-  - "Postgres"
-  - "Stripe"
+  - "LangGraph"
+  - "Gemini · Groq"
+  - "SQLite"
+  - "Razorpay (test mode)"
 links:
   github: "https://github.com/nideshkaarthikrs/AgentNegotiate"
 ---
 
 ## The problem
 
-Small teams that buy the same categories of goods and services repeatedly — packaging, raw
-materials, software seats — spend a disproportionate amount of time on back-and-forth
-negotiation for purchases that follow the same pattern every time. Someone has to chase quotes,
-push back on price, and stay inside a budget, and none of it gets recorded anywhere useful.
+Small teams that buy the same categories of goods repeatedly — raw materials, parts, packaging —
+spend a disproportionate amount of time haggling over purchases that follow the same pattern
+every time. Someone has to chase quotes, push back on price and stay inside a budget, and very
+little of it gets recorded anywhere useful.
 
-Procurement tools either skip negotiation entirely (fixed-price catalogs) or leave it to email
-threads with no policy enforcement and no audit trail. There's no middle layer that negotiates
-on your behalf while staying inside rules you actually trust.
+The question behind AgentNegotiate: can two AI agents run that back-and-forth on their own,
+while the money decisions stay under rules a human actually trusts?
 
 ## What I built
 
-<PlaceholderVisual label="Buyer agent dashboard — screenshot coming soon" className="aspect-video w-full" />
+AgentNegotiate is a simulation prototype, not a live product. Both sides of the deal are agents
+configured in the app, and payments run in test mode. It exists to show how the negotiation
+loop and its guardrails behave end to end.
 
-A buyer agent that opens a negotiation with an asking price and a target, working from a spend
-limit and a set of merchant-specific policies it isn't allowed to cross.
+<Screenshot
+  src="/images/work/agentNegotiate1.png"
+  alt="AgentNegotiate setup screen with buyer and seller agent configuration and a procurement request"
+  width="2278"
+  height="1550"
+  caption="Setup — the buyer's target price and budget, the seller's list and floor price, and a plain-English procurement request."
+/>
 
-<PlaceholderVisual label="Policy engine view — screenshot coming soon" className="aspect-video w-full" />
+You set a mandate for each side: the buyer's target price, maximum budget and round limit, and
+the seller's list price, floor and round limit. A plain-English procurement request ("100 units
+of steel bolts, 30-day payment terms") is parsed into structured data by the LLM.
 
-A policy engine sitting between both agents that evaluates every offer in real time and blocks
-anything that violates the configured floor, ceiling, or merchant terms — before it ever reaches
-settlement.
+<Screenshot
+  src="/images/work/agentNegotiate2.png"
+  alt="Negotiation view showing buyer and seller offers across three rounds, ending in an accepted deal"
+  width="2204"
+  height="1550"
+  caption="Negotiation — offers stream in round by round until a deal closes, then a payment link can be created."
+/>
 
-<PlaceholderVisual label="Audit log — screenshot coming soon" className="aspect-video w-full" />
+The agents then trade offers round by round, each with a short explanation of its move. When
+they converge, the deal closes and a payment link can be generated for the agreed amount.
 
-A full audit trail: every offer, counter, block, and the final agreed price, written to an
-append-only log so a human can reconstruct exactly how a deal was reached.
+<Screenshot
+  src="/images/work/agentNegotiate3.png"
+  alt="Audit trail listing each negotiation event with its previous hash, own hash, and validity"
+  width="1540"
+  height="1442"
+  caption="Audit trail — every event is chained to the previous one with SHA-256, and the app verifies the whole chain."
+/>
 
-Payment settlement wired to the agreed price once both sides confirm, so a negotiated deal turns
-into a completed transaction without a manual handoff.
+Every offer, decision and payment event is written to an audit trail where each entry carries
+the hash of the one before it, so any tampering breaks the chain.
 
 ## Watch it negotiate
+
+This replay uses the exact run from the screenshots above.
 
 <NegotiationReplay />
 
@@ -56,19 +77,19 @@ into a completed transaction without a manual handoff.
 
 **Key decisions and trade-offs**
 
-- **Policy engine as a separate service, not agent logic.** Keeping spend limits and merchant
-  rules out of the agent's own reasoning means a policy violation is a deterministic block, not
-  something an LLM could be argued out of. The trade-off is an extra network hop on every offer.
-- **Every message is logged before it's acted on.** The audit log writes synchronously ahead of
-  settlement, which adds latency to each round but means there's never a settled deal without a
-  matching trail.
-- **Agents negotiate in structured offers, not free text.** Constraining the protocol to typed
-  offer objects makes the policy engine's job simple and makes replays (like the one above)
-  possible, at the cost of a less "natural" negotiation transcript.
+- **The LLM never makes financial decisions.** Accept, counter and every price come from a
+  deterministic policy engine. The LLM only parses the procurement request and writes the
+  human-readable explanations. That keeps the money logic testable, at the cost of the agents
+  sounding a little formulaic.
+- **Hard limits are applied last.** The buyer's counter can never push the total past the
+  budget, and the seller's never drops below the floor — no other rule can override them.
+- **A shared round horizon.** The negotiation ends at whichever side's round limit is lower, so
+  one side can't keep conceding past a limit the other never agreed to. Each round concedes a
+  growing share of the remaining gap, and the final round concedes all of it.
+- **Hash-chained audit, not just logs.** Chaining entries with SHA-256 makes the trail
+  tamper-evident, so a human can trust how a deal was reached, not just that it was.
 
 ## Where it's going
 
-Next milestones: a merchant-side policy editor so counterparties can configure their own floor
-and terms without touching code, and a real Stripe-backed settlement flow in place of the
-current sandboxed one. Multi-round negotiation across more than two agents is on the roadmap but
-not started.
+For now this stays a prototype. Before turning it into anything more, I want to understand how
+procurement teams actually negotiate today and where they'd let an agent act on their behalf.

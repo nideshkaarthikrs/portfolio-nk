@@ -3,6 +3,7 @@ import { NegotiationEvent } from "@/components/negotiation-replay/types";
 const typeAccent: Record<NegotiationEvent["type"], string> = {
   offer: "border-white/10",
   counter: "border-white/10",
+  check: "border-signal/30",
   revised: "border-signal/40",
   blocked: "border-brass/60",
   agreement: "border-status-live/50",
@@ -13,6 +14,7 @@ const typeAccent: Record<NegotiationEvent["type"], string> = {
 const typeLabelColor: Record<NegotiationEvent["type"], string> = {
   offer: "text-fog",
   counter: "text-fog",
+  check: "text-signal",
   revised: "text-signal",
   blocked: "text-brass",
   agreement: "text-status-live",
