@@ -7,10 +7,10 @@ const CENTER = { x: 320, y: 180 };
 const RING_RADIUS = 52;
 
 const CREATORS = [
-  { label: "Writer", x: 120, y: 92, share: 0.3 },
-  { label: "Composer", x: 525, y: 82, share: 0.25 },
-  { label: "Editor", x: 112, y: 280, share: 0.2 },
-  { label: "Designer", x: 530, y: 284, share: 0.25 },
+  { label: "Composer", x: 120, y: 92, share: 0.3 },
+  { label: "Lyricist", x: 525, y: 82, share: 0.25 },
+  { label: "Singer", x: 112, y: 280, share: 0.2 },
+  { label: "Director", x: 530, y: 284, share: 0.25 },
 ];
 
 const RING_OPACITY = [1, 0.7, 0.45, 0.25];
